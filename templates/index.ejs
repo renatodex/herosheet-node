@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<title>HeroSheet</title>
+		<style type="text/css">
+			.valores td, .hero-name{
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="atualizar" id="atualizar" />
+		<% herois.forEach( function(heroi) { %>
+			<div class="heroi">
+				<h1>Nome: <span class="hero-name-<%= heroi.id %>"><%= heroi['name'] %></span></h1>
+				<table border="1" cellpading="5" class="hero-stats">
+					<tr>
+						<td>Life Total</td>
+						<td>Life atual</td>
+						<td>Healing Surges Total</td>
+						<td>HS atual</td>
+						<td>Action Points</td>
+					</tr>
+					<tr class="valores" id="valores-<%= heroi.id %>">
+						<td class="totalLife"><%= heroi.total_hit_points %></td>
+						<td class="life"><%= heroi.actual_hit_points %></td>
+						<td class="totalHs"><%= heroi.total_healing_surges %></td>
+						<td class="hs"><%= heroi.actual_healing_surges %></td>
+						<td class="ap"><%= heroi.action_points %></td>
+					</tr>
+				</table>
+				<div class="botoes" style="display:none;">
+					<input type="button" value="save" class="save" data-id="<%= heroi.id %>" />
+				</div>
+			</div>
+		<% }); %>
+		<script type="text/javascript">
+			var socket = io.connect("http://herosheet:1337");
+
+			function criaInput(tgt){
+				var valor = tgt.text(),
+						input = $('<input type="text" />').val(valor);
+
+				tgt.html("");
+				tgt.append(input);
+				tgt.parents('.heroi').find('.botoes').fadeIn();
+			};
+
+			function fechaAtivo(){
+				var tgt = $('.heroi').find('.ativo');
+
+				tgt.text($('input', tgt).val());
+				$('input', tgt).remove();
+				tgt.removeClass('ativo');
+			}
+
+			$(document).ready(function(){
+				$('h1 span, .hero-stats .valores td').unbind('click').bind('click', function(){
+					
+					if(!$(this).hasClass('ativo')){
+						fechaAtivo();
+						criaInput($(this));
+					}
+
+					$(this).addClass('ativo');
+				});
+
+				$("body").keydown(function( event ) {
+				  if(event.which == 27){
+				  	fechaAtivo();
+				  	$('.botoes').fadeOut();
+				  }
+				});
+
+				$("#atualizar").bind('click', function(){
+					socket.emit("updateSheet");
+				});
+
+				socket.on("clientUpdateSheet", function() {
+					//alert("ATUALIZANDO!");
+					window.location = "/";
+				});
+
+				$('.save').bind('click', function(){
+					var id = $(this).data("id"),
+							nome = $(".name-"+id).text(),
+							valores = $("#valores-"+id),
+							totalLife = $(".totalLife", valores).text(),
+							life = $(".life", valores).text(),
+							totalHs = $(".totalHs", valores).text(),
+							hs = $(".hs", valores).text(),
+							ap = $(".ap", valores).text();
+
+							console.log(nome);
+
+					/*socket.emit("updateHeroSheet", {
+						"hero_id" : id,
+						"name" : nome,
+						"total_hit_points" : totalLife,
+						"actual_hit_points" : life,
+						"total_healing_surges" : totalHs,
+						"actual_healing_surges" : hs,
+						"action_points" : ap
+					});*/
+					fechaAtivo();
+				});
+			});
+		</script>
+	</body>
+</html>
