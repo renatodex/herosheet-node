@@ -13,8 +13,11 @@ app.get('/', function(req, res){
 	});
 });
 
-var server = app.listen(process.env.PORT || 1337),
-	io = require('socket.io').listen(server)
+var port = process.env.PORT || 1337;
+var server = app.listen(port, function() {
+	console.log("Express server listening on port %d", port)
+});
+var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
 	console.log(socket.id);
