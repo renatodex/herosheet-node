@@ -7,7 +7,7 @@ app.set('views', __dirname + '/templates');
 app.use(express.bodyParser());
 
 app.get('/', function(req, res){
-	request('http://herosheet-frontend.herokuapp.com/api/list_team_heroes?team_id=1', 'GET', function(err, response, body) {
+	request('http://herosheet-backend.herokuapp.com/api/list_team_heroes?team_id=1', 'GET', function(err, response, body) {
 		var json = JSON.parse(body)
 		res.render('index.ejs', {team: json['team']['nome'], herois: json['team']['herois']});
 	});
