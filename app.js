@@ -7,7 +7,7 @@ app.set('views', __dirname + '/templates');
 app.use(express.bodyParser());
 
 app.get('/', function(req, res){
-	request('http://boiling-headland-1601.herokuapp.com:3000/api/list_team_heroes?team_id=1', 'GET', function(err, response, body) {
+	request('http://boiling-headland-1601.herokuapp.com/api/list_team_heroes?team_id=1', 'GET', function(err, response, body) {
 		var json = JSON.parse(body)
 		res.render('index.ejs', {team: json['team']['nome'], herois: json['team']['herois']});
 	});
@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 						"&action_points=" + obj.action_points;
 
 		request({
-			url: 'http://boiling-headland-1601.herokuapp.com:3000/api/update_hero_sheet',
+			url: 'http://boiling-headland-1601.herokuapp.com/api/update_hero_sheet',
 			body: str,
 			method: "POST"
 			},
