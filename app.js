@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on("updateHeroSheet", function(obj){
 
 		var str = "hero_id="+ obj.hero_id + 
-						"&name=" + obj.name +
+						"&name=" + obj['name'] +
 						"&total_hit_points=" + obj.total_hit_points +
 						"&actual_hit_points=" + obj.actual_hit_points +
 						"&total_healing_surges=" + obj.total_healing_surges +

@@ -84,17 +84,15 @@
 
 				$('.save').bind('click', function(){
 					var id = $(this).data("id"),
-							nome = $(".name-"+id).text(),
+							nome = $(".hero-name-"+id).text() || $('input[type=text]').val(),
 							valores = $("#valores-"+id),
-							totalLife = $(".totalLife", valores).text(),
-							life = $(".life", valores).text(),
-							totalHs = $(".totalHs", valores).text(),
-							hs = $(".hs", valores).text(),
-							ap = $(".ap", valores).text();
+							totalLife = $(".totalLife", valores).text() || $('input[type=text]').val(),
+							life = $(".life", valores).text() || $('input[type=text]').val(),
+							totalHs = $(".totalHs", valores).text() || $('input[type=text]').val(),
+							hs = $(".hs", valores).text() || $('input[type=text]').val(),
+							ap = $(".ap", valores).text() || $('input[type=text]').val();
 
-							console.log(nome);
-
-					/*socket.emit("updateHeroSheet", {
+					socket.emit("updateHeroSheet", {
 						"hero_id" : id,
 						"name" : nome,
 						"total_hit_points" : totalLife,
@@ -102,7 +100,7 @@
 						"total_healing_surges" : totalHs,
 						"actual_healing_surges" : hs,
 						"action_points" : ap
-					});*/
+					});
 					fechaAtivo();
 				});
 			});
