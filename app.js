@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 						"&action_points=" + obj.action_points;
 
 		request({
-			url: 'http://herosheet-frontend.herokuapp.com/api/update_hero_sheet',
+			url: 'http://herosheet-backend.herokuapp.com/api/update_hero_sheet',
 			body: str,
 			method: "POST"
 			},
