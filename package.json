@@ -1,0 +1,24 @@
+{
+  "name": "herosheet-node",
+  "version": "0.0.0",
+  "description": "a nodejs application to iterate with our backend using websockets",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.4.0",
+    "httpinvoke": "~1.0.4",
+    "socket.io": "~0.9.16",
+    "request": "~2.27.0",
+    "underscore": "~1.5.2",
+    "ejs": "~0.8.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renatodex/herosheet-node"
+  },
+  "author": "Pipo Bizelli & Renato Alves",
+  "license": "BSD"
+}
