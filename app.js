@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 	});
 });
 
-var server = app.listen(1337),
+var server = app.listen(process.env.PORT || 1337),
 	io = require('socket.io').listen(server)
 
 io.sockets.on('connection', function (socket) {
